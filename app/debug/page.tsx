@@ -61,11 +61,7 @@ export default function DebugPage() {
     th: { background: "#1e3a5f", color: "#fff", padding: "8px 12px", textAlign: "left", fontSize: 13 },
     td: { padding: "7px 12px", borderBottom: "1px solid #ddd", fontSize: 13 },
     log: { background: "#1a1a1a", color: "#00ff88", padding: 16, borderRadius: 8, height: 180, overflowY: "auto", fontSize: 12 },
-    badge: (v: number) => ({
-      display: "inline-block", padding: "2px 8px", borderRadius: 12, fontSize: 12, fontWeight: "bold",
-      background: v >= 7 ? "#d4edda" : v >= 5 ? "#fff3cd" : "#f8d7da",
-      color: v >= 7 ? "#155724" : v >= 5 ? "#856404" : "#721c24",
-    }),
+    
   };
 
   return (
@@ -124,7 +120,7 @@ export default function DebugPage() {
                     <td key={i} style={styles.td}>{v ?? "—"}</td>
                   ))}
                   <td style={styles.td}>
-                    <span style={styles.badge(row.finalGrade)}>{row.finalGrade}</span>
+                    <span style={{ display: "inline-block", padding: "2px 8px", borderRadius: 12, fontSize: 12, fontWeight: "bold", background: row.finalGrade >= 7 ? "#d4edda" : row.finalGrade >= 5 ? "#fff3cd" : "#f8d7da", color: row.finalGrade >= 7 ? "#155724" : row.finalGrade >= 5 ? "#856404" : "#721c24" }}>{row.finalGrade}</span>
                   </td>
                 </tr>
               ))}
