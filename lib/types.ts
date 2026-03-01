@@ -1,49 +1,10 @@
-// ─── Tipos base del sistema ───────────────────────────────────────────────────
+import { Timestamp } from "firebase/firestore";
 
-export interface Teacher {
-  id: string;
-  name: string;
-  email: string;
-  /** Ej: { "10mo EGB \"A\" (V)": ["pe", "mat"] } */
-  assignedSubjects: Record<string, string[]>;
-}
-
-export interface Student {
-  id: string;          // ID del documento en Firestore (código raro, ej: 297Vu8...)
-  name: string;
-  email: string;
-  studentId: string;   // Cédula
-}
-
-export interface AttendanceRecord {
-  /** Fecha en formato YYYY-MM-DD (es el ID del documento) */
-  date: string;
-  /** Mapa: { [studentDocId]: "P" | "F" | "J" } */
-  records: Record<string, "P" | "F" | "J">;
-}
-
-export interface GradebookStructure {
-  /** Arreglo con los nombres de columnas, ej: ["AI1","AI2","PI","EX"] */
-  assignments: string[];
-}
-
-/** Notas reales: { [studentDocId]: { AI1: 10, EX: 9, ... } } */
-export type GradebookData = Record<string, Record<string, number>>;
-
-export interface Observation {
-  id?: string;
-  date: string;        // ISO string
-  note: string;
-  teacherId?: string;
-}
-
-// ─── Resultado enriquecido para la tabla de calificaciones ───────────────────
-
-export interface StudentGradeRow {
-  studentDocId: string;
-  studentName: string;
-  studentCedula: string;
-  grades: Record<string, number>;  // { AI1: 10, EX: 9, ... }
-  /** Promedio final calculado sobre 10 */
-  finalGrade: number;
-}
+export interface Teacher { id: string; email: string; displayName: string; role: string; assignedSubjects: Record<string, string[]>; }
+export interface Student { id: string; name: string; studentId: string; email: string; }
+export interface AttendanceRecord { date: string; records: Record<string, "P" | "F" | "J">; }
+export interface Assignment { id: string; name: string; type: string; }
+export interface GradebookStructure { trimester: number; assignments: Assignment[]; }
+export interface GradebookData { [studentId: string]: Record<string, number>; }
+export interface StudentGradeRow { studentDocId: string; studentName: string; studentCedula: string; grades: Record<string, number>; finalGrade: number; }
+export interface Observation { id?: string; date: string | Timestamp; note: string; teacherId: string; }
